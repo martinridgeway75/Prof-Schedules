@@ -1,0 +1,22 @@
+{
+  "short_name": "Schedules",
+  "name": "Schedules",
+  "icons": [
+    {
+      "src": "../schedules/schedules192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "../schedules/schedules512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "../schedules/index.html",
+  "background_color": "#2c3e50",
+  "display": "standalone",
+  "scope": "../schedules/",
+  "theme_color": "#2c3e50",
+  "prefer_related_applications": false
+}

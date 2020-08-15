@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0 user-scalable=no" />
+    <meta name="theme-color" content="#2c3e50">
+    <title>Schedules</title>
+    <!-- TODO: <link rel="canonical" href="https://_your_domain_/schedules" /> -->
+    <link rel="manifest" href="../schedules/manifest.json" />
+    <link rel="icon" sizes="192x192" href="schedules192.png" />
+    <link type="text/css" rel="stylesheet" href="main.min.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div id="parsing" class="row">
+            <div class="col-lg-12 text-center">
+                <div class="header" style="margin:20px 0 0 0;">Load:</div>
+                <div>
+                    <form id="inputFile">
+                        <input type="file" id="csv-file" name="files" style="display:none;" />
+                        <label id="labelcsv-file" for="csv-file" class="btn btn-xs btn-whiteBlue" style="margin-top:10px;width:140px;">Initial .csv (utf-8)</label>
+                    </form>
+                </div>
+                <div>
+                    <form id="inputJSON">
+                        <input type="file" id="json-file" name="filez" style="display:none;" />
+                        <label id="labeljson-file" for="json-file" class="btn btn-xs btn-whiteBlue" style="margin-top:10px;width:140px;">Saved file (.json)</label>
+                    </form>
+                </div>
+                <div><span>L</span>
+                    <input type="checkbox" id="settingsOnly" name="settingsOnly" value="" class="ckbox1" />
+                    <label for="settingsOnly" class="small" style="font-weight:400; font-size: 0.7em;">load settings only</label>
+                </div>
+                <div>
+                    <div id="savedsession" class="btn btn-xs btn-whiteBlue" style="margin-top:10px;width:140px;">Last session</div>
+                </div>
+                <div>
+                    <div id="newsession" class="btn btn-xs btn-whiteBlue" style="margin-top:10px;width:140px;">Blank template</div>
+                </div>
+                <div>
+                    <div id="helpfileA" class="circleborder"><em><strong>i</strong></em></div>
+                </div>
+                <div>
+                    <div style="margin-top: 10px;">
+                        <span>Schedules start at: </span>
+                        <select id="configStartHr">
+                            <option value="1">01:00</option>
+                            <option value="2">02:00</option>
+                            <option value="3">03:00</option>
+                            <option value="4">04:00</option>
+                            <option value="5">05:00</option>
+                            <option value="6">06:00</option>
+                            <option value="7">07:00</option>
+                            <option value="8">08:00</option>
+                            <option selected value="9">09:00</option>
+                            <option value="10">10:00</option>
+                            <option value="11">11:00</option>
+                            <option value="12">12:00</option>
+                            <option value="13">13:00</option>
+                            <option value="14">14:00</option>
+                            <option value="15">15:00</option>
+                            <option value="16">16:00</option>
+                            <option value="17">17:00</option>
+                            <option value="18">18:00</option>
+                            <option value="19">19:00</option>
+                            <option value="20">20:00</option>
+                            <option value="21">21:00</option>
+                            <option value="22">22:00</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <span>Schedules end at: </span>
+                        <select id="configNumOfHrsPerDay">
+                            <option value="10">10:00</option>
+                            <option value="11">11:00</option>
+                            <option value="12">12:00</option>
+                            <option value="13">13:00</option>
+                            <option value="14">14:00</option>
+                            <option value="15">15:00</option>
+                            <option value="16">16:00</option>
+                            <option value="17">17:00</option>
+                            <option selected value="18">18:00</option>
+                            <option value="19">19:00</option>
+                            <option value="20">20:00</option>
+                            <option value="21">21:00</option>
+                            <option value="22">22:00</option>
+                            <option value="23">23:00</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="information" class="row nodisplay" style="z-index:15;position:relative;">
+            <div class="col-lg-12 text-center">
+                <div>
+                    <div id="helpfile1" class="circleborder"><em><strong>i</strong></em></div>
+                </div>
+                <div class="header" style="border-bottom:1px solid #2c3e50;">Information</div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 info">
+                    <div class="absolute-wrapper height600">
+                    <h4 style="margin:20px 0 10px 0;">CSV files <span class="small">(single tab/sheet only, no duplicate headers, utf-8 encoded)</span></h4>
+                    <h5 style="display: inline-block;">Course uploads</h5> <span id="updateHdrsA" class="btn pull-right btn-xs btn-warning">edit headers</span> <span class="small"><em>(all four fields and headers are required)</em></span>
+                    <table class="table table-bordered table-condensed">
+                        <thead><tr><td><input id="strHdr1" class="csvhdr" placeholder="교과목명" value="교과목명" disabled /></td><td><input id="strHdr2" class="csvhdr" placeholder="강의실" value="강의실" disabled /></td><td><input id="strHdr3" class="csvhdr" placeholder="시간" value="시간" disabled /></td><td><input id="strHdr4" class="csvhdr" placeholder="수강 번호" value="수강 번호" disabled /></td></tr></thead>
+                        <tbody>
+                            <tr><td>DU실용영어(1)</td><td>사1206</td><td>월(12:00∼12:50) 수(12:00∼12:50)</td><td>0001</td></tr>
+                            <tr><td>인터뷰영어</td><td>범1215A</td><td>화(12:00∼13:15) 목(12:00∼13:15)</td><td>1000</td></tr>
+                            <tr><td>*영어회화(2)</td><td>인2-2402</td><td>목(10:00∼11:50)</td><td>1001</td></tr>
+                            <tr><td>TOEIC</td><td>공2201 공2101</td><td>월(13:30∼14:45) 수(15:00∼16:15)</td><td>9998</td></tr>
+                            <tr><td>D.C.R.</td><td>대구본1403</td><td>수(13:00∼15:50)</td><td>9999</td></tr>
+                        </tbody>
+                    </table>
+                        <h5 style="display: inline-block;">Renaming all courses</h5> <span id="updateHdrsB" class="btn pull-right btn-xs btn-warning">edit headers</span> <br />
+                        <span class="small"><em>(both headers required: (1) the old course name -&gt; (2) the new or updated course name)</em></span>
+                    <table class="table table-bordered table-condensed">
+                        <thead><tr><td><input id="strHdr5" class="csvhdr" placeholder="수강 번호1" value="수강 번호1" disabled /></td><td><input id="strHdr6" class="csvhdr" placeholder="수강 번호2" value="수강 번호2" disabled /></td></tr></thead>
+                        <tbody>
+                            <tr><td>1000</td><td>1001</td></tr>
+                            <tr><td>9999</td><td>9998</td></tr>
+                        </tbody>
+                    </table>
+                        <h5 style="display: inline-block;">Teachers</h5> <span class="small" style="display: inline-block;"><em>(the second header is optional - if fields exist in Korean, they will appear on the CSV.)</em></span>
+                    <table class="table table-bordered table-condensed">
+                        <thead><tr><td>teachers</td><td>강사명</td></tr></thead>
+                        <tbody>
+                            <tr><td>Patrick Travers</td><td>패트릭 트라버스</td></tr>
+                            <tr><td>이영식</td><td></td></tr>
+                        </tbody>
+                    </table>
+                    <h5 style="display: inline-block;">Department definitions</h5> <span class="small" style="display: inline-block;"><em>(the second header is optional - if fields exist, they will appear on the PDF)</em></span>
+                    <table class="table table-bordered table-condensed">
+                        <thead><tr><td>shortcode</td><td>description</td></tr></thead>
+                        <tbody>
+                            <tr><td>대구본</td><td>Main Building (1)</td></tr>
+                            <tr><td>활</td><td>조형예술대학(5호관)</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6 info">
+                    <div class="absolute-wrapper height600">
+                    <h4 style="margin:20px 0 10px 0;">Keyboard + Mouse</h4>
+                    <p><span class="btn-xs btn-primary">SHIFT</span><span class="small" style="font-weight: bold"> + CLICK</span>: deselect (or unassign if this is a course)<br><span class="btn-xs btn-primary">ALT</span><span class="small" style="font-weight: bold"> + </span><span class="btn-xs btn-primary">SHIFT</span><span class="small" style="font-weight: bold"> + CLICK</span>: select course under courselist - any subsequent click on a schedule will attempt to assign the course there.</p>
+                    <h4 style="margin:20px 0 10px 0;">Icons</h4>
+                    <p><span class="icon-wrench"></span>: edit or make changes<br><span class="icon-recycle"></span>: unassigns all courses either under one specific category or from one specific schedule.<br><span class="icon-flash"></span>: automatically builds as many schedules as possible for one specific category (NOTE: applies to blank schedules only, observes active settings).</p>
+                    <h4 style="margin:20px 0 10px 0;">Clinics</h4>
+                    <p>Clinics behave differently to regular courses in that each instance is created when it is assigned to a schedule and destroyed when it is unassigned.<br>Each clinic instance cannot be edited directly. Edits must be made to the clinic definition itself - the changes will then apply to all instances of that definition.</p>
+                    <h4 style="margin:20px 0 -10px 0;">Department Groups</h4>
+                    <ul>
+                        <li>A department "group" is a filter that determines which course departments can be included together on the same schedule.</li>
+                        <li>Groups work by restricting assignments to courses with departments that are <em>inclusive</em> of a single common group.</li>
+                        <li>When using groups, each course assigned to any given schedule (starting with the first assignment) will dictate which courses are subsequently allowed on that same schedule.</li>
+                        <li>Groups can be set to restrict assignments by department either on an individual "daily" basis or to restrict assignments by department throughout the entirety of a schedule "week".</li>
+                        <li>While groups are active, if a department is left out altogether, all courses under that department will be ignored when making assignments.</li>
+                        <li>Groups can be engaged, changed or overridden at any time without affecting assignments that have already been set.</li>
+                    </ul>
+                    </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row" style="z-index:15;position:relative;">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+            <div id="hiddendeptopenR" class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4 small">
+                <div id="setting-section" class="text-left nodisplay">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="hidetitlesettings" class="header text-center" style="padding-top: 20px;">Schedule Settings</div>
+                            <div class="header text-center">
+                                <form id="uploadJSON">
+                                    <input type="file" id="jsonSettings-file" name="filejzon" style="display:none;" />
+                                    <label id="labeljsonSettings" for="jsonSettings-file" class="btn btn-xs btn-whiteBlue" style="margin:5px 0;width: 120px;">Set via .json</label>
+                                </form>
+                            </div>
+                            <div style="margin-bottom: 5px; border-bottom: 1px solid #2c3e50;">All Departments:<span id="deptopenR" class="btn-xs btn-whiteBlue icon-wrench pull-right" style="margin-top:-3px;">Edit</span></div>
+                            <div id="alldepartments"></div>
+                            <div id="newgroupid" style="margin-top:5px;" data-grpindex="0">
+                                <span id="makegroup" class="btn btn-xs btn-whiteBlue">Add selection to groups</span>
+                                <div style="margin-top:5px;">Department Groups:<br><span class="icon-attention" style="color:#ff9800;"></span> <em>While groups are active, courses with a department not included below will be ignored.</em></div>
+                            </div>
+                            <div class="absolute-wrapper height300">
+                                <div id="allgroups" class="well well-sm" style="margin-bottom:5px; border-radius:0;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 5px; border-bottom: 1px solid #2c3e50;">Maximum Contact Hours:</div>
+                    <div><span>Per schedule:</span>
+                        <input type="number" id="hrsPerSchedule" class="" value="" maxlength="2" min="0" /> </div>
+                    <div><span>Per day:</span>
+                        <input type="number" id="hrsPerDay" class="" value="" maxlength="2" min="0" /> </div>
+                    <div style="margin-bottom:10px;"><span>Sequentially:</span>
+                        <div class="btn btn-xs btn-inline nopadleft">
+                            <fieldset>
+                                <div class="switch-toggle switch-candy">
+                                    <input id="seqHrsTwo" name="scale" type="radio">
+                                    <label for="seqHrsTwo">&nbsp;2-2-3(3)&nbsp;</label>
+                                    <input id="seqHrsThree" name="scale" type="radio" checked>
+                                    <label for="seqHrsThree">&nbsp;3-4-3(6)&nbsp;</label>
+                                    <a></a>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <span>1hr - 2hr - 90min(3hr)</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center" style="margin:10px 0;"><span id="save-settings" class="btn btn-xs btn-success">Save and Close</span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+      <div id="departments" class="revealdepts nodisplay">
+        <div class="row" style="z-index:15;position:relative;">
+            <div class="col-lg-6 col-md-6 col-sm-6 small"></div>
+            <div class="col-lg-4 col-md-4 col-sm-5 small">
+                <div id="deptEDIT-section" class="text-left">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="header text-center" style="padding-top: 20px;">Departments</div>
+                            <div class="header text-center">
+                                <form id="inputDEPTS">
+                                    <input type="file" id="deptEDIT-file" name="filedped" style="display:none;" />
+                                    <label id="labeldeptEDIT-file" for="deptEDIT-file" class="btn btn-xs btn-whiteBlue" style="margin:5px 0;width: 120px;">Add via .csv file</label>
+                                </form><span id="deptEDITadd" class="btn btn-xs btn-whiteBlue" style="margin:0 0 5px 0;width:120px;">Add new dept</span> </div>
+                            <div style="margin-bottom: 5px; border-bottom: 1px solid #2c3e50;">All Departments:</div>
+                            <div class="absolute-wrapper height300">
+                                <div id="deptEDIT"> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center" style="margin:10px 0;"><span id="save-deptEDIT" class="btn btn-xs btn-success">Save updates</span><span id="exit-deptEDIT" class="btn btn-xs btn-whiteBlue" style="margin-left:5px;">Exit</span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div id="statistics" class="nodisplay">
+        <div class="row text-center small" style="z-index:15;position:relative;">
+            <div class="header" style="margin:20px 0 0 0;">Course hours assigned</div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+            </div>
+            <div id="stats-grid" class="col-lg-6 col-md-6 col-sm-6"></div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <div class="row text-left">
+                    <h5 class="text-center" style="margin: 4px 0;">Courses by category:</h5>
+                    <div class="absolute-wrapper height200" style="border-top: 1px solid #2c3e50;">
+                        <div id="coursesByCat"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center small">
+            <div class="header" style="margin:20px 0 0 0;">Clinic hours assigned</div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+            </div>
+            <div id="klinics-grid" class="col-lg-6 col-md-6 col-sm-6"></div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <div class="row text-left">
+                    <h5 class="text-center" style="margin: 4px 0;">Clinics by definition:</h5>
+                    <div class="absolute-wrapper height200" style="border-top: 1px solid #2c3e50;">
+                        <div id="coursesByDef"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-12 text-center" style="margin:10px 0;"><span id="exit-stats" class="btn btn-xs btn-whiteBlue icon-map-o"> Exit</span></div>
+            </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row" style="z-index:15;position:relative;">
+            <div class="col-lg-4 col-md-3 col-sm-2 small"></div>
+            <div class="col-lg-4 col-md-6 col-sm-8 small">
+                <div id="tchrs-section" class="text-left nodisplay">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="header text-center" style="padding-top: 20px;">Teachers</div>
+                            <div class="header text-center">
+                                <form id="inputTCHRS">
+                                    <input type="file" id="tchrs-file" name="filets" style="display:none;" />
+                                    <label id="labeltchrs-file" for="tchrs-file" class="btn btn-xs btn-whiteBlue" style="margin:5px 0;width: 120px;">Add via .csv file</label>
+                                </form><span id="tchradd" class="btn btn-xs btn-whiteBlue" style="margin:0 0 5px 0;width:120px;">Add new teacher</span> </div>
+                            <div style="margin-bottom: 5px; border-bottom: 1px solid #2c3e50;">All Teachers:</div>
+                            <div class="absolute-wrapper height300">
+                                <div id="alltchrs"> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center" style="margin:10px 0;"><span id="save-tchrs" class="btn btn-xs btn-success">Save updates</span><span id="exit-tchrs" class="btn btn-xs btn-whiteBlue" style="margin-left:5px;">Exit</span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="displayOverrides" class="row nodisplay">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div id="leftsidesettings" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 small">
+                        <div id="leftsidechild" style="visibility: visible;padding:5px 0 5px 0;color:#ffffff;background-color:#2c3e50;margin:0 -15px;" class="header text-center">Courses <span id="startedr" class="btn-xs btn-blueYellow icon-wrench"></span></div>
+                        <div class="absolute-wrapper height65">
+                            <div id="coursehelpers">
+                                <div class="text-center">
+                                    <span id="renamer" class="btn btn-xs btn-whiteBlue icon-attention nodisplay" style="margin-right:2px;">Rename courses</span>
+                                    <div id="newCNames" class="icon-attention nodisplay">Rename <form id="inputRENAME">
+                                            <input type="file" id="uploadnewCNames" name="filecn" style="display:none;" />
+                                            <label id="labeluploadnewCNames" for="uploadnewCNames" class="btn btn-xs btn-whiteBlue" style="display: inline-block;line-height:1.2;margin:1px 0;">via .csv</label>
+                                        </form>
+                                        <span id="savenewCNames" class="btn btn-xs btn-success" style="line-height:1.2;margin:1px 0;">Save</span> <span id="exitnewCNames" class="btn btn-xs btn-whiteBlue" style="line-height:1.2;margin:1px 1px 1px 0;">Exit</span></div>
+                                    <input type="number" id="searchcourses" class="input-xs text-center" style="width:80px;" value="" maxlength="4" minlength="4" min="0000" max="9999" placeholder="search" /> <span id="coursefinder" class="btn btn-xs btn-whiteBlue icon-search" style="margin-left:-7px;"></span>
+                                    <div id="klinicHolder" class="pull-right nodisplay" style="margin: 0 20px 0 0;">
+                                        <input type="checkbox" id="klinicHold" name="klinicHold" value="" class="ckbox1" />
+                                        <label for="klinicHold" class="small" style="font-weight:400; font-size: 0.7em;">LOCK CLINIC</label>
+                                    </div>
+                                </div>
+                                <div class="text-center" style="padding:3px 15px 0 15px;"><span id="purger" class="btn btn-xs btn-dangerous icon-attention nodisplay" style="margin-right:2px;">Purge&nbsp;</span>
+                                <span id="addnewcourse" class="btn btn-xs btn-success nodisplay">New courses / categories</span>
+                                <span id="openklinics" class="btn btn-xs btn-whiteBlue nodisplay">Define clinics</span>
+                                <div id="klinicscontainer" class="nodisplay"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="rightsidesettings" class="col-lg-9 col-md-9 col-sm-9 col-xs-9 small">
+                        <div id="rightsidechild" class="header text-center" style="padding:5px 0 5px 0;color:#ffffff;background-color:#2c3e50;margin:0 -15px;">Schedules <span id="open-settings" class="btn-xs btn-blueYellow icon-wrench"></span><span id="downloadjson" class="downloadr pull-right icon-download">SAVE .json</span><span id="downloadcsv" class="downloadr pull-right icon-download">ADMIN .csv</span><span id="downloadpdf" class="downloadr pull-right icon-download">COURSE schedules .pdf</span><span id="dlklinicpdf" class="downloadr pull-right icon-download">CLINIC schedules .pdf</span> </div>
+                        <div class="absolute-wrapper height65">
+                            <div id="overridesettings">
+                                <div> <span class="small" style="margin-right:-5px;">CATEGORIES:</span> <span class="btn btn-xs">
+                        <fieldset>
+                            <div class="switch-toggle switch-candy">
+                                <input id="mlticatsyes" name="mlticats" type="radio">
+                                <label for="mlticatsyes">multiple&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <input id="mlticatsno" name="mlticats" type="radio" checked>
+                                <label for="mlticatsno">single</label>
+                                <a></a>
+                            </div>
+                        </fieldset>
+                    </span><span class="small">&nbsp;MAX.HOURS: </span>
+                                    <div id="schedhrsbyps" class="btn btn-xs" style="margin: 0 -5px 0 0;border-color:#dedede;"><span id="schedhrsset" style="font-weight:700;">12</span> total</div>
+                                    <div id="dayhrsbyps" class="btn btn-xs" style="margin: 0 -5px 0 0;border-color:#dedede;"><span id="dayhrsset" style="font-weight:700;">4</span> per day</div>
+                                    <div id="seqhrsbyps" class="btn btn-xs" style="border-color:#dedede;"><span id="seqhrsset" style="font-weight:700;">3-4-3(6)</span> seq.</div>
+                                    <div style="display: inline-block;"><span class="small">&nbsp;NEW: </span><span id="newmontofri" class="btn btn-xs btn-whiteBlue">Mon-Fri</span> <span id="newmontosat" class="btn btn-xs btn-whiteBlue">Sat.</span></div>
+                                    <div class="pull-right" style="margin:2px 4px 0 0;"><span id="view-stats" class="btn btn-xs btn-whiteBlue icon-map-o"> Stats</span></div>
+                                    <div class="pull-right" style="margin:2px 5px 0 0;display:inline-block"><span id="helpfileB" class="circleborder" style="border-color:#dedede;"><em><strong>i</strong></em></span></div>
+                                    <div class="pull-right" style="margin:2px 4px 0 0;"><span id="updatenames" class="btn btn-xs btn-whiteBlue icon-user">Update</span> <span id="showteachers" class="btn btn-xs btn-whiteBlue icon-user">Show</span></div>
+                                </div>
+                                <div id="nodeptgrps" class="nodisplay"><span class="btn btn-xs" style="margin:0;border-color:#dedede;color:rgba(44,62,80,0.4);cursor:default;">No department groups defined</span></div>
+                                <div id="deptgrpcontrol"><span id="deptgrpsbyps" class="btn btn-xs" style="margin: 0;border-color:#dedede;">Department Groups:</span><span id="deptgroupsset" class="" style="padding:5px 0;"></span> <span class="btn btn-xs">
+                        <fieldset>
+                            <div class="switch-toggle switch-candy">
+                                <input id="deptGrpsDaily" name="grpset" type="radio" checked>
+                                <label for="deptGrpsDaily">daily</label>
+                                <input id="deptGrpsWeekly" name="grpset" type="radio">
+                                <label for="deptGrpsWeekly">weekly&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <a></a>
+                            </div>
+                        </fieldset>
+                    </span> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="newcoursemodal" class="row nodisplay">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                    <div id="hiddendeptopenL" class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                    <div id="newcourseform" class="col-lg- col-md-4 col-sm-4 col-xs-4 text-left small">
+                        <div class="header text-center" style="margin:5px 0 5px 0;border-bottom:1px solid #2c3e50;padding-top:20px;">New Category</div>
+                        <div>
+                            <div id="newcatlist" style="margin:5px 0;"></div> <span id="newcoursecatmake" class="btn-xs btn-success">Add category</span>
+                            <div id="choosenewcat" class="well well-sm nodisplay"> <span id="savenewcat" class="btn btn-xs btn-success">Create Category</span>
+                                <input type="text" id="definenewcat" class="btn-xs text-center" style="margin:5px 0;width:150px;vertical-align:middle;padding:2px;" placeholder="category name" /> <span id="exitchoosenewcat" class="btn btn-xs btn-danger pull-right" style="margin-top:5px;">Exit</span> </div>
+                        </div>
+                        <div class="header text-center" style="margin:5px 0 5px 0;border-bottom:1px solid #2c3e50;padding-top: 20px;">New Course(s)</div>
+                        <div class="row">
+                            <div class="col-lg-12" style="margin-bottom:10px;">
+                                <div>
+                                    <form id="freshFile">
+                                        <input type="file" id="csv-freshfile" name="freshfile" style="display:none;" />
+                                        <label id="labelcsv-freshfile" for="csv-freshfile" class="btn btn-xs btn-whiteBlue pull-right" style="margin-bottom:10px;width:80px;">from .csv</label>
+                                    </form>
+                                 </div>
+                            </div>
+                        </div>
+                        <div style="margin:5px 0;"><span>Course Code:</span>
+                            <input type="number" id="newcoursename" class="btn-xs" style="width:90px;vertical-align:middle;padding-top:2px;padding-bottom:2px;" value="0001" maxlength="4" minlength="4" min="0001" max="9999" />
+                        </div>
+                        <div>
+                            <div id="chooseexistingcats"> <span>Category:</span>
+                                <div id="select-styleA" class="">
+                                    <select id="newcoursecat"> </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin:5px 0;">
+                            <div id="chooseexistingdepts"><span>Department:</span>
+                                <div id="select-styleB">
+                                    <select id="newcoursedept"> </select>
+                                </div>
+                                <span id="deptopenL" class="btn-xs btn-whiteBlue icon-wrench">Edit departments</span>
+                            </div>
+                        </div>
+                        <div class="">
+                            <span>Room:</span>
+                            <input type="text" id="newcourseroom" class="btn-xs" style="width:90px;vertical-align:middle;padding:2px;" placeholder="101" />
+                            <input type="text" id="newcourseroomB" class="btn-xs" style="width:90px;vertical-align:middle;padding:2px;margin-left:2px;" placeholder="(split)" />
+                        </div>
+                        <div>
+                            <div style="margin:5px 0 2px 0;">Class Duration:</div>
+                            <div>
+                                <fieldset>
+                                    <div class="switch-toggle switch-candy">
+                                        <input id="durationone" name="pickduration" type="radio" checked>
+                                        <label for="durationone">1시간(2)</label>
+                                        <input id="durationninety" name="pickduration" type="radio">
+                                        <label for="durationninety">90분(2)</label>
+                                        <input id="durationtwo" name="pickduration" type="radio">
+                                        <label for="durationtwo">2시간(1)</label>
+                                        <input id="durationthree" name="pickduration" type="radio">
+                                        <label for="durationthree">3시간(1)</label>
+                                        <a></a>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div style="margin:5px 0;"><span>Class Times:</span>
+                            <div id="newcoursedayhrsone" style="margin:2px 0 2px 0;">
+                                <div id="select-styleC" class="">
+                                    <select id="newdayone">
+                                        <option value="월">월</option>
+                                        <option value="화">화</option>
+                                        <option value="수">수</option>
+                                        <option value="목">목</option>
+                                        <option value="금">금</option>
+                                        <option value="토">토</option>
+                                    </select>
+                                </div>
+                                <div id="select-styleD" class="">
+                                    <select id="newhrsone"> </select>
+                                </div>
+                                <div id="select-styleF" class="">
+                                    <select id="newdaytwo">
+                                        <option value="월">월</option>
+                                        <option value="화">화</option>
+                                        <option value="수">수</option>
+                                        <option value="목">목</option>
+                                        <option value="금">금</option>
+                                        <option value="토">토</option>
+                                    </select>
+                                </div>
+                                <div id="select-styleG" class="">
+                                    <select id="newhrstwo"> </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center" style="margin:20px 0;">
+                            <div id="savecoursechanges" class="btn btn-xs btn-success">Create Course</div>
+                            <div id="exitcoursechanges" class="btn btn-xs btn-whiteBlue">Exit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="defineklinics" class="row nodisplay" style="z-index:15;position:relative;">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+                    <div id="newklinicform" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left small">
+                        <div class="header text-center" style="padding-top:20px;">Clinic definitions</div>
+                        <div class="header text-center" style="margin:5px 0 5px 0;">
+                            <span id="klinicadd" class="btn btn-xs btn-whiteBlue" style="margin:0 0 5px 0;width:120px;">Define new clinic</span>
+                        </div>
+                        <div style="margin-bottom: 5px; border-bottom: 1px solid #2c3e50;">All definitions:</div>
+                        <div class="absolute-wrapper height300">
+                        <div id="klinic-section" class="height500"></div>
+                        </div>
+                        <div class="text-center" style="margin:20px 0;">
+                            <div id="saveklinicchanges" class="btn btn-xs btn-success">Save definitions</div>
+                            <div id="exitklinicchanges" class="btn btn-xs btn-whiteBlue">Exit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="left" class="col-lg-3 col-md-3 col-sm-3 small">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="references" class="text-left" style="padding-top: 100px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="right" class="col-lg-9 col-md-9 col-sm-9 small">
+                <div id="schedule-instances" class="row" style="padding-top: 100px;"></div>
+                <div id="pagebottom"></div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="container-fluid">
+        <div id="loadingScreen" class="row nodisplay">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="text-center">
+                        <h4 class="waiting-dots" style="margin:300px 0 10px 0;">Parsing csv data. Please wait<span> .</span><span> .</span><span> .</span></h4>
+                    </div>
+                </div>
+        </div>
+    </div> -->
+    <script type="text/javascript" src="papaparse.min.js"></script>
+    <script type="text/javascript" src="msc-script.min.js"></script>
+    <script type="text/javascript" src="fileSaver.js"></script>
+    <script type="text/javascript" src="main.min.js"></script>
+</body>
+</html>

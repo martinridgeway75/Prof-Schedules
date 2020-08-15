@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page Not Found</title>
+    <style>
+    @media screen and (min-width:768px){
+        div.contentBox{margin-left:260px}
+        div.fixedBox{position:fixed;left:0;top:0;bottom:0;width:100px;display:block;}
+        div.fixedBox2{position:fixed;left:100px;top:0;bottom:0;width:160px;display:block;}
+    }
+    @media screen and (max-width:767px){
+        div.fixedBox{position:fixed;left:0;top:0;height:60px;right:0;display:block;}
+        div.fixedBox2{position:fixed;left:0;top:60px;right:0;height:60px;display:block;}
+        div.contentBox{margin-left:0;margin-top:140px}
+    }
+    div.contentBox{padding-bottom:100px}
+      </style>
+  </head>
+  <body>
+      <div class="container-fluid">
+          <div id="mainMenu" class="fixedBox"></div>
+          <div class="fixedBox2"></div>
+          <div id="contentsBox" class="contentBox container-fluid">
+              <div class="row" style="margin-top: 80px;">
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2 text-center"></div>
+                  <div id="auth-holder" class="col-lg-6 col-md-6 col-sm-6 col-xs-8 text-center">
+                      <h2>404</h2>
+                      <h1>Page Not Found</h1>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </body>
+</html>
