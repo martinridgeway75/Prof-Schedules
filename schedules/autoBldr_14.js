@@ -488,7 +488,7 @@ function removeAssignment(schedule, course) {
 }
 
 function buildDefaultScheduleUiArr(val) { //Defines the hour length of schedules
-    var uiArrRow = new Array(config.uiScheduleNumOfHrsPerDay).fill(val);
+    var uiArrRow = new Array(configUiScheduleHrsPerDay).fill(val);
 
     return JSON.parse(JSON.stringify(new Array(6).fill(uiArrRow))); //always max of six days
 }
