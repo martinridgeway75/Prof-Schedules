@@ -4520,10 +4520,10 @@ function saveCourseDataAsCSV() {
 }
 
 function saveSessionAsJSON() {
-    var jsonFileName = "Schedules_" + cleanWsReturnUnderscores((new Date()).toDateString());
     var removeCount = 0;
     var statsClone = JSON.parse(JSON.stringify(stats)); //deep clone stats and scheduleData...DO NOT AFFECT CURRENT SESSION!
     var scheduleDataClone = JSON.parse(JSON.stringify(scheduleData));
+    var cfg = {uiTimeInputStartHr:config.uiTimeInputStartHr,uiScheduleNumOfHrsPerDay:config.uiScheduleNumOfHrsPerDay}; //json must have config value or dayhrs could get messed up
     var TEXTdoc = [];
     var i;
 
@@ -4553,8 +4553,8 @@ function saveSessionAsJSON() {
     TEXTdoc.push(courseData);
     TEXTdoc.push(scheduleDataClone);
     TEXTdoc.push(csvStrings);
-
-    createFileAndDownload(jsonFileName, "json", JSON.stringify(TEXTdoc));
+    TEXTdoc.push(cfg);
+    createFileAndDownload("Schedules_", "json", JSON.stringify(TEXTdoc));
 }
 
 //ROOM SPLITS
