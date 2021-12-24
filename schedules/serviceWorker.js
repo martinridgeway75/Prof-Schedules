@@ -2,7 +2,7 @@
 /*global caches*/
 /*global fetch*/
 
-var CACHE_NAME = "schedules-cache-v1.5";
+var CACHE_NAME = "schedules-cache-v1.6";
 var urlsToCache = [
     "../schedules/main.min.js",
     "../schedules/autoBldr_14.min.js",
