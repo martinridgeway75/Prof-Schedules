@@ -3,9 +3,9 @@
 /*global document*/
 /*global Worker*/
 
-// window.addEventListener('load', function() {
-// (function(){
-// "use strict";
+window.addEventListener('load', function() {
+(function(){
+"use strict";
 
 var config = {
     notes: "App assumes that there are either MonToFri or MonToSat schedules.\nApp assumes that courses are: 2x1 hour blocks, 2x90 minute blocks, 2 hour blocks, 3 hour blocks or 1 hour clinics.\nApp assumes all courses start on the hour.",
@@ -7859,7 +7859,7 @@ function getConfigFromParsingScreen() { //called BEFORE: csv is parsed or blank 
     docElId("configNumOfHrsPerDay").disabled = true;
 }
 
-//if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/schedules/serviceWorker.js'); } //required for PWA install
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/schedules/serviceWorker.js'); } //required for PWA install
 if ("onpagehide" in window ) {
     window.addEventListener("pagehide", saveToLocalStorage, false);
 } else {
@@ -7867,5 +7867,5 @@ if ("onpagehide" in window ) {
 }
 
 initCoreApp();
-// })();
-// });
+})();
+});
