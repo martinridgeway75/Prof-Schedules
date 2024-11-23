@@ -3,9 +3,9 @@
 /*global document*/
 /*global Worker*/
 
-window.addEventListener('load', function() {
-(function(){
-"use strict";
+// window.addEventListener('load', function() {
+// (function(){
+// "use strict";
 
 var config = {
     notes: "App assumes that there are either MonToFri or MonToSat schedules.\nApp assumes that courses are: 2x1 hour blocks, 2x90 minute blocks, 2 hour blocks, 3 hour blocks or 1 hour clinics.\nApp assumes all courses start on the hour.",
@@ -6884,13 +6884,21 @@ function hasClickedOnCat(elId) {
 
 function findInList(el) { //identifying the clicked cell on the reference course list...
     var elId,
-        str;
+        str,
+        tempCid;
 
     if (stats.tempCparam !== "") {
-        docElId("ref" + stats.tempCparam + "").style.backgroundColor = "";
-        docElId("ref" + stats.tempCparam + "").style.color = "";
+        tempCid = "ref" + stats.tempCparam + "";
+        
+        try { //edge case...UI unresponsive when course deleted but not cleared in schedule (cannot replicate error)
+            docElId(tempCid).style.backgroundColor = "";
+            docElId(tempCid).style.color = "";
+        } catch (e) {
+            stats.tempCparam = "";
+        } 
     }
     klinicLock("off");
+
     if (stats.tempKlinic.kbtn !== "") {
         toggleKlinicBtn(null, "off");
         stats.tempKlinic.kbtn = "";
@@ -6982,11 +6990,18 @@ function findInMap(el) { //identifying the clicked cell in schedules list
     var elId,
         substr1,
         substr3,
-        substr4;
+        substr4,
+        tempCid;
 
     if (stats.tempCparam !== "") {
-        docElId("ref" + stats.tempCparam + "").style.backgroundColor = "";
-        docElId("ref" + stats.tempCparam + "").style.color = "";
+        tempCid = "ref" + stats.tempCparam + "";
+            
+        try { //edge case...UI unresponsive when course deleted but not cleared in schedule (cannot replicate error)
+            docElId(tempCid).style.backgroundColor = "";
+            docElId(tempCid).style.color = "";
+        } catch (e) {
+            stats.tempCparam = "";
+        } 
     }
     if (stats.tempKlinic.kbtn !== "" && stats.tempKlinic.isHeld === false) { toggleKlinicBtn(null, "off"); }
     if (stats.tempKlinic.kbtn === "" && stats.tempKlinic.isHeld !== false) {
@@ -7844,7 +7859,7 @@ function getConfigFromParsingScreen() { //called BEFORE: csv is parsed or blank 
     docElId("configNumOfHrsPerDay").disabled = true;
 }
 
-if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/schedules/serviceWorker.js'); } //required for PWA install
+//if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/schedules/serviceWorker.js'); } //required for PWA install
 if ("onpagehide" in window ) {
     window.addEventListener("pagehide", saveToLocalStorage, false);
 } else {
@@ -7852,5 +7867,5 @@ if ("onpagehide" in window ) {
 }
 
 initCoreApp();
-})();
-});
+// })();
+// });
